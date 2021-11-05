@@ -209,6 +209,7 @@ class {{ service.py_name }}Base(ServiceBase):
         {% if not method.server_streaming %}
         response = await self.{{ method.py_name }}(**request_kwargs, _stream=stream)
         await stream.send_message(response)
+        request_kwargs["_stream"] = stream
         {% else %}
         await self._call_rpc_handler_server_stream(
             self.{{ method.py_name }},
